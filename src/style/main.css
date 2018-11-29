@@ -1,0 +1,62 @@
+/*body {
+  padding: 40px;
+  max-width: 1000px;
+}*/
+
+.monti-logo {
+  color: black;
+  font-size: 3rem;
+}
+
+/* nested list for equipment */
+/* Top level for list */
+.nested-list li {
+  list-style: none;
+}
+
+/*reshaping h tags in key areas in order to keep with */
+/*the former size format while replacing tags.*/
+h1.headline.second-child,
+div.topic div.container h2 {
+  font-size: 1.28rem;
+}
+.servicesindividual h3 {
+  font-size: 1.071rem;
+}
+ul.newstags li {
+  list-style-type: none;
+  float: left;
+  margin-right: 10px;
+  padding: 5px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.newsitem {
+  margin-bottom: 2rem;
+  list-style-type: none;
+}
+.newsitem img {
+  max-width: 200px;
+  border-radius: 5px;
+  margin-bottom: 1.2rem;
+}
+.newspage h1 {
+  font-size: 1rem;
+}
+/*END reshaping h tags in key areas in order to keep with */
+/*the former size format while replacing tags.*/
+@media (min-width: 768px) {
+  .location-single {
+    margin-top: 65px;
+  }
+  /*fixes text overlap */
+  .home-slider .carousel-inner > .item .bg-img {
+    left: 55%;
+  }
+  .home-slider__content {
+    width: 90%;
+    padding-left: 3%;
+  }
+  /*END fixes text overlap */
+}
