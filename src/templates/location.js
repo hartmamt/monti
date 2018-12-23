@@ -89,56 +89,24 @@ export default ({ data }) => {
               <span>Other Locations</span>
             </h3>
           </div>
-          <div className="col-sm-3">
-            <div className="portfolio-item">
-              <div className="portfolio-thumbnail">
-                <a href="/locations/sumter-plant/">
-                  <img
-                    src="https://lh5.ggpht.com/a1yjbt4KtHByH_ZAschIMeKLKrjdnJmGVg7MVpRD4N4x5mE2ILWcirKsHaVI7wTa8SjOfEvUgXKh5KZZsXe_hpG2dVqCoQ=s300"
-                    className="img-responsive"
-                    alt="Sumter Plant"
-                  />
-                </a>
-                <p className="text-center">
-                  <a href="/locations/sumter-plant/">Sumter Plant</a>
-                </p>
-              </div>
-            </div>
-          </div>
-          <div className="col-sm-3">
-            <div className="portfolio-item">
-              <div className="portfolio-thumbnail">
-                <a href="/locations/greenwood-plant/">
-                  <img
-                    src="https://lh6.ggpht.com/UdO_UoRE0T-sKe_l3JQzOu7mR8FAY8Oa2tigka8hbiPWzk_lxekBCH_d1Vk6LxqnUdxs5jK_GP2gOvMWps86Ri_K-sFZ=s300"
-                    className="img-responsive"
-                    alt="Greenwood Plant"
-                  />
-                </a>
-                <p className="text-center">
-                  <a href="/locations/greenwood-plant/">Greenwood Plant</a>
-                </p>
-              </div>
-            </div>
-          </div>
-          <div className="col-sm-3">
-            <div className="portfolio-item">
-              <div className="portfolio-thumbnail">
-                <a href="/locations/wm-f-mcgraw-co/">
-                  <img
-                    src="https://lh5.ggpht.com/oo65MJOd7WNViQUi4DpX47SPfMCoOMWmTwKIb0kOmY_MjFcZFdrHbFV0npHPdjfdSFe_DSzUg_1_5_uHSYKI4UvtLSALIg=s300"
-                    className="img-responsive"
-                    alt="Wm. F. McGraw & Co."
-                  />
-                </a>
-                <p className="text-center">
-                  <a href="/locations/wm-f-mcgraw-co/">
-                    Wm. F. McGraw &amp; Co.
+          {data.allContentfulLocation.edges.map(({ node }, counter) => (
+            <div className="col-sm-3" key={"location-footer-" + counter}>
+              <div className="portfolio-item">
+                <div className="portfolio-thumbnail">
+                  <a href={`/locations/${node.slug}/`}>
+                    <img
+                      src={node.image.file.url}
+                      className="img-responsive"
+                      alt={node.image.title}
+                    />
                   </a>
-                </p>
+                  <p className="text-center">
+                    <a href={`/locations/${node.slug}/`}>{node.name}</a>
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
+          ))}
         </div>
       </div>
       {/* / .row */}

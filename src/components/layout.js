@@ -1,4 +1,6 @@
 import React from "react";
+import { Location } from "@reach/router";
+
 import { Link, StaticQuery, graphql } from "gatsby";
 import theme from "../style/theme.css";
 import main from "../style/main.css";
@@ -18,19 +20,29 @@ export default ({ children }) => (
   <StaticQuery
     query={graphql`
       query {
-        allContentfulService {
-          edges {
-            node {
-              name
-              slug
-            }
+        contentfulServices {
+          services {
+            name
+            slug
           }
         }
-        allContentfulLocation {
-          edges {
-            node {
-              name
-              slug
+        contentfulLocations {
+          locations {
+            name
+            shortName
+            city
+            state
+            address1
+            zipCode
+            phoneNumber
+            faxNumber
+            emailAddress
+            slug
+            iso {
+              title
+              file {
+                url
+              }
             }
           }
         }
@@ -43,14 +55,14 @@ export default ({ children }) => (
             src={logo}
             style={{ marginTop: "-15px", marginRight: "-15px", height: "65px" }}
           />
-          <Link to="/" style={{ textShadow: `none`, backgroundImage: `none` }}>
+          {/* <Link to="/" style={{ textShadow: `none`, backgroundImage: `none` }}>
             <h3 style={{ display: `inline` }}>MySweetSite</h3>
           </Link>
           <ul style={{ listStyle: `none`, float: `right` }}>
             <ListLink to="/">Home</ListLink>
             <ListLink to="/about/">About</ListLink>
             <ListLink to="/contact/">Contact</ListLink>
-          </ul>
+          </ul> */}
 
           <div
             className="navbar navbar-default navbar-fixed-top"
@@ -98,101 +110,137 @@ export default ({ children }) => (
                 >
                   Request Quote
                 </a>
-                <ul className="nav navbar-nav navbar-right">
-                  <li className="active">
-                    <a href="/">Home</a>
-                  </li>
-                  <li className="hidden-sm">
-                    <a
-                      href="#"
-                      className="dropdown-toggle"
-                      data-toggle="dropdown"
-                    >
-                      Services
-                      <b className="caret" />
-                    </a>
-                    <ul className="dropdown-menu">
-                      {data.allContentfulService.edges.map(
-                        ({ node }, counter) => (
-                          <li key={"service -" + counter}>
-                            <a href={"/services/" + node.slug + "/"}>
-                              <div>{node.name}</div>
-                            </a>
+
+                <Location>
+                  {({ location }) => {
+                    console.log(location);
+                    return (
+                      <ul className="nav navbar-nav navbar-right">
+                        <li
+                          className={location.pathname == "/" ? "active" : ""}
+                        >
+                          <a href="/">Home</a>
+                        </li>
+                        <li
+                          className={
+                            location.pathname.startsWith("/service")
+                              ? "active hiddensm"
+                              : "hiddensm"
+                          }
+                        >
+                          <a
+                            href="#"
+                            className="dropdown-toggle"
+                            data-toggle="dropdown"
+                          >
+                            Services
+                            <b className="caret" />
+                          </a>
+                          <ul className="dropdown-menu">
+                            {data.contentfulServices.services.map(
+                              (node, counter) => (
+                                <li key={"service -" + counter}>
+                                  <a href={"/services/" + node.slug + "/"}>
+                                    <div>{node.name}</div>
+                                  </a>
+                                </li>
+                              )
+                            )}
+                          </ul>
+                        </li>
+                        <li
+                          className={
+                            location.pathname.startsWith("/locations")
+                              ? "active"
+                              : ""
+                          }
+                        >
+                          <a
+                            href="#"
+                            className="dropdown-toggle"
+                            data-toggle="dropdown"
+                          >
+                            Locations
+                            <b className="caret" />
+                          </a>
+                          <ul className="dropdown-menu">
+                            {data.contentfulLocations.locations.map(
+                              (node, counter) => (
+                                <li key={"location-" + counter}>
+                                  <a href={`/locations/${node.slug}/`}>
+                                    <div>{node.name}</div>
+                                  </a>
+                                </li>
+                              )
+                            )}
+                          </ul>
+                        </li>
+                        <li
+                          className={
+                            location.pathname.startsWith("/news")
+                              ? "active"
+                              : ""
+                          }
+                        >
+                          <a href="/news">News</a>
+                        </li>
+                        <li
+                          className={
+                            location.pathname.startsWith("/equipment")
+                              ? "active"
+                              : ""
+                          }
+                        >
+                          <a href="/equipmentlist">Equipment</a>
+                        </li>
+                        <li
+                          className={
+                            location.pathname.startsWith("/materiallist")
+                              ? "active"
+                              : ""
+                          }
+                        >
+                          <a href="/materiallist">Materials</a>
+                        </li>
+                        {/*                   
+                      <li
+                        className={
+                          window.location.pathname.startsWith("/purchasing")
+                            ? "active"
+                            : ""
+                        }
+                      >
+                        <a
+                          href="#"
+                          className="dropdown-toggle"
+                          data-toggle="dropdown"
+                        >
+                          Purchasing
+                          <b className="caret" />
+                        </a>
+                        <ul className="dropdown-menu">
+                          <li>
+                            <a href="/purchasing">Purchasing</a>
                           </li>
-                        )
-                      )}
-                    </ul>
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      className="dropdown-toggle"
-                      data-toggle="dropdown"
-                    >
-                      Locations
-                      <b className="caret" />
-                    </a>
-                    <ul className="dropdown-menu">
-                      {data.allContentfulLocation.edges.map(
-                        ({ node }, counter) => (
-                          <li key={"location -" + counter}>
-                            <a href={"/locations/" + node.slug + "/"}>
-                              <div>{node.name}</div>
-                            </a>
+                          <li>
+                            <a href="/vendor">Vendor Login</a>
                           </li>
-                        )
-                      )}
-                      {/* <li>
-                        <a href="/locations/sumter-plant/">Sumter Plant</a>
-                      </li>
-                      <li>
-                        <a href="/locations/greenwood-plant/">
-                          Greenwood Plant
-                        </a>
-                      </li>
-                      <li>
-                        <a href="/locations/wm-f-mcgraw-co/">
-                          Wm. F. McGraw &amp; Co.
-                        </a>
-                      </li>
-                      <li>
-                        <a href="/locations/cincinnati-plant/">
-                          Cincinnati Plant
-                        </a>
+                        </ul>
                       </li> */}
-                    </ul>
-                  </li>
-                  <li>
-                    <a href="/news">News</a>
-                  </li>
-                  <li>
-                    <a href="/equipmentlist">Equipment</a>
-                  </li>
-                  <li>
-                    <a href="/materiallist">Materials</a>
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      className="dropdown-toggle"
-                      data-toggle="dropdown"
-                    >
-                      Purchasing
-                      <b className="caret" />
-                    </a>
-                    <ul className="dropdown-menu">
-                      <li>
-                        <a href="/purchasing">Purchasing</a>
-                      </li>
-                      <li>
-                        <a href="/vendor">Vendor Login</a>
-                      </li>
-                    </ul>
-                  </li>
-                  <li>
-                    <a href="/employment">Jobs</a>
-                  </li>
-                </ul>
+                        <li
+                          className={
+                            location.pathname.startsWith("/employment")
+                              ? "active"
+                              : ""
+                          }
+                        >
+                          <a href="/employment">Jobs</a>
+                        </li>
+                      </ul>
+                    );
+                  }}
+                </Location>
+
                 {/* Mobile Search */}
                 <form
                   className="navbar-form navbar-right visible-xs"
@@ -218,6 +266,59 @@ export default ({ children }) => (
           {/* / .navigation */}
         </header>
         {children}
+        <div>
+          {/* Footer */}
+          <footer>
+            <div className="container">
+              <div className="row">
+                {data.contentfulLocations.locations.map((node, counter) => (
+                  <div
+                    className="col-lg-3 col-md-4 col-sm-6"
+                    style={{ whiteSpace: "nowrap" }}
+                    key={"location-footer-" + counter}
+                  >
+                    <h4>
+                      <i className="fa fa-map-marker text-theme-primary" />{" "}
+                      {node.name}
+                    </h4>
+                    <p>
+                      {node.address1}
+                      <br /> {node.city}, {node.state}, {node.zipCode}
+                      <br />
+                      <br /> Phone: {node.phoneNumber}
+                      <br /> Fax: {node.faxNumber}
+                      <br /> Email: {node.emailAddress}
+                      <br />
+                      {node.iso ? (
+                        <a
+                          href={node.iso.file.url}
+                          target="_blank"
+                          rel="noopener"
+                        >
+                          {node.iso.title}
+                        </a>
+                      ) : null}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </footer>
+          {/* Copyright */}
+          <div className="container">
+            <div className="row">
+              <div className="col-sm-12">
+                <div className="copyright">
+                  Copyright 2018 - Monti Incorporated | All Rights Reserved
+                </div>
+              </div>
+            </div>
+            {/* / .row */}
+          </div>
+          {/* / .container */}
+          {/* Global site tag (gtag.js) - Google Analytics */}
+          {/* END Global site tag (gtag.js) - Google Analytics */}
+        </div>
       </div>
     )}
   />

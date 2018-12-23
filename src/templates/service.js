@@ -131,6 +131,9 @@ export const query = graphql`
             marks {
               type
             }
+            data {
+              uri
+            }
             value
             nodeType
             content {

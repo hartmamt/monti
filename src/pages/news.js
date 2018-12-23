@@ -22,10 +22,16 @@ export default () => (
             }
           }
         }
-        allContentfulNews {
+        allContentfulNews(sort: { fields: [dateAndTime], order: DESC }) {
           edges {
             node {
               name
+              description {
+                description
+                childMarkdownRemark {
+                  html
+                }
+              }
               contentful_id
               imageAltTag
               slug
@@ -36,6 +42,16 @@ export default () => (
                 title
                 file {
                   url
+                }
+              }
+              teaser {
+                nodeType
+                content {
+                  content {
+                    nodeType
+                    value
+                  }
+                  nodeType
                 }
               }
               details {
@@ -59,37 +75,6 @@ export default () => (
                     }
                   }
                   nodeType
-                  data {
-                    target {
-                      fields {
-                        title {
-                          en_US
-                        }
-                        description {
-                          en_US
-                        }
-                        file {
-                          en_US {
-                            url
-                            details {
-                              size
-                              image {
-                                width
-                                height
-                              }
-                            }
-                          }
-                        }
-                      }
-                      sys {
-                        space {
-                          sys {
-                            type
-                          }
-                        }
-                      }
-                    }
-                  }
                 }
               }
             }
@@ -156,18 +141,18 @@ export default () => (
                       {/* <p class="text-muted">on March 25, 2014</p> */}
                       <div
                         dangerouslySetInnerHTML={{
-                          __html: documentToHtmlString(node.details)
+                          __html: node.description.childMarkdownRemark.html
                         }}
                       />
 
                       <strong>
-                        <a
+                        {/* <a
                           href="https://www.d2p.com/contact-us"
                           target="_blank"
-                        />
+                        /> */}
                         <a
                           className="btn btn-lg btn-red"
-                          href="/news/come-visit-monti-inc-at-the-akron-design-2-part-show-oct-24-25/"
+                          href={`/news/${node.slug}/`}
                         >
                           Read More...
                         </a>
@@ -176,21 +161,6 @@ export default () => (
                     </div>
                   </div>
                 ))}
-                {/* Pagination */}
-                <ul>
-                  <li className="active">
-                    <a href="/news/">1</a>
-                  </li>
-                  <li>
-                    <a href="/news/page-2/">2</a>
-                  </li>
-                  <li>
-                    <a href="/news/page-3/">3</a>
-                  </li>
-                  <li>
-                    <a href="/news/page-2/">»</a>
-                  </li>
-                </ul>
               </div>
             </div>
           </div>

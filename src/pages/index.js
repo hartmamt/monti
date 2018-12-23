@@ -10,16 +10,42 @@ export default () => (
   <StaticQuery
     query={graphql`
       query {
-        allContentfulService {
+        contentfulServices {
+          services {
+            name
+            slug
+            thumbnail {
+              file {
+                url
+              }
+            }
+          }
+        }
+        allContentfulFeedback {
           edges {
             node {
               name
-              slug
-              thumbnail {
-                file {
-                  url
+              quote {
+                childMarkdownRemark {
+                  html
                 }
               }
+            }
+          }
+        }
+        allContentfulNews(
+          limit: 2
+          sort: { fields: [dateAndTime], order: DESC }
+        ) {
+          edges {
+            node {
+              name
+              frontPageText {
+                childMarkdownRemark {
+                  html
+                }
+              }
+              slug
             }
           }
         }
@@ -275,118 +301,35 @@ export default () => (
                 {/* Wrapper for slides */}
                 <div className="carousel-inner">
                   {/* Slide  */}
-                  <div className="item active" id="item-9">
-                    <div className="container">
-                      <div className="row">
-                        <div className="col-sm-3">
-                          <div className="home-slider__content">
-                            <p className="text-muted animated slideInLeft delay-4">
-                              Thank you very much Randy, I really appreciate
-                              your help, I think the same of your company!
-                              Always been my best supplier!! #1
-                            </p>
-                            <p className="text-muted animated slideInLeft delay-4">
-                              Alexandro, Eaton
-                            </p>
-                            {/* <a href="#" class="btn btn-lg btn-theme-primary animated fadeInUpBig delay-5">Discover More</a> */}
+
+                  {data.allContentfulFeedback.edges.map(({ node }, counter) => (
+                    <div
+                      className={`item ${counter === 0 ? "active" : ""}`}
+                      id="item-9"
+                    >
+                      <div className="container">
+                        <div className="row">
+                          <div className="col-sm-3">
+                            <div className="home-slider__content">
+                              <p className="text-muted animated slideInLeft delay-4">
+                                <div
+                                  dangerouslySetInnerHTML={{
+                                    __html: node.quote.childMarkdownRemark.html
+                                  }}
+                                />
+                              </p>
+                              <p className="text-muted animated slideInLeft delay-4">
+                                {node.name}
+                              </p>
+                              {/* <a href="#" class="btn btn-lg btn-theme-primary animated fadeInUpBig delay-5">Discover More</a> */}
+                            </div>
                           </div>
                         </div>
+                        {/* / .row */}
                       </div>
-                      {/* / .row */}
+                      {/* / .container */}
                     </div>
-                    {/* / .container */}
-                  </div>
-                  {/* / .item */}
-                  {/* Slide  */}
-                  <div className="item " id="item-10">
-                    <div className="container">
-                      <div className="row">
-                        <div className="col-sm-3">
-                          <div className="home-slider__content">
-                            <p className="text-muted animated slideInLeft delay-4">
-                              Definitely thank your team on the floor, they have
-                              been amazing!! All of them have come through for
-                              us time and time again and I personally can’t
-                              thank you enough.
-                            </p>
-                            <p className="text-muted animated slideInLeft delay-4">
-                              Kim, Eaton
-                            </p>
-                            {/* <a href="#" class="btn btn-lg btn-theme-primary animated fadeInUpBig delay-5">Discover More</a> */}
-                          </div>
-                        </div>
-                      </div>
-                      {/* / .row */}
-                    </div>
-                    {/* / .container */}
-                  </div>
-                  {/* / .item */}
-                  {/* Slide  */}
-                  <div className="item " id="item-11">
-                    <div className="container">
-                      <div className="row">
-                        <div className="col-sm-3">
-                          <div className="home-slider__content">
-                            <p className="text-muted animated slideInLeft delay-4">
-                              You made my last 6 weeks a little easier and were
-                              professional in all cases…THANK YOU! Monti is
-                              AWESOME!
-                            </p>
-                            <p className="text-muted animated slideInLeft delay-4">
-                              Debby, Siemens
-                            </p>
-                            {/* <a href="#" class="btn btn-lg btn-theme-primary animated fadeInUpBig delay-5">Discover More</a> */}
-                          </div>
-                        </div>
-                      </div>
-                      {/* / .row */}
-                    </div>
-                    {/* / .container */}
-                  </div>
-                  {/* / .item */}
-                  {/* Slide  */}
-                  <div className="item " id="item-12">
-                    <div className="container">
-                      <div className="row">
-                        <div className="col-sm-3">
-                          <div className="home-slider__content">
-                            <p className="text-muted animated slideInLeft delay-4">
-                              Great customer service on all our parts, thank
-                              you!
-                            </p>
-                            <p className="text-muted animated slideInLeft delay-4">
-                              Sarah, Schneider-Electric
-                            </p>
-                            {/* <a href="#" class="btn btn-lg btn-theme-primary animated fadeInUpBig delay-5">Discover More</a> */}
-                          </div>
-                        </div>
-                      </div>
-                      {/* / .row */}
-                    </div>
-                    {/* / .container */}
-                  </div>
-                  {/* / .item */}
-                  {/* Slide  */}
-                  <div className="item " id="item-13">
-                    <div className="container">
-                      <div className="row">
-                        <div className="col-sm-3">
-                          <div className="home-slider__content">
-                            <p className="text-muted animated slideInLeft delay-4">
-                              Thank you so much Tony…You did a Terrific job!!!!!
-                            </p>
-                            <p className="text-muted animated slideInLeft delay-4">
-                              Travis, Eaton
-                            </p>
-                            {/* <a href="#" class="btn btn-lg btn-theme-primary animated fadeInUpBig delay-5">Discover More</a> */}
-                          </div>
-                        </div>
-                      </div>
-                      {/* / .row */}
-                    </div>
-                    {/* / .container */}
-                  </div>
-                  {/* / .item */}
+                  ))}
                 </div>
                 {/* / .carousel */}
               </div>
@@ -413,7 +356,7 @@ export default () => (
           <div className="main-services">
             <div className="container">
               <div className="row">
-                {data.allContentfulService.edges.map(({ node }, counter) => (
+                {data.contentfulServices.services.map((node, counter) => (
                   <div className="col-sm-6 col-lg-4">
                     <div className="services">
                       <div className="service-item">
@@ -438,6 +381,45 @@ export default () => (
               {/* / .row */}
             </div>
             {/* / .container */}
+            {/* Recent Blog Posts */}
+            <div className="container">
+              <div className="row">
+                <div className="col-sm-12">
+                  <h2 className="headline-lg">Recent News</h2>
+                </div>
+              </div>
+              {/* / .row */}
+              <div className="row">
+                {data.allContentfulNews.edges.map(({ node }, counter) => (
+                  <div className="col-sm-6">
+                    <div className="blog">
+                      {/* <img src="img/photo-1.jpg" alt="..."> */}
+                      <div className="blog-desc">
+                        <h3>
+                          <a href={`/news/${node.slug}`}>{node.name}</a>
+                        </h3>
+                        <hr />
+                        <p />
+                        <div
+                          dangerouslySetInnerHTML={{
+                            __html: node.frontPageText.childMarkdownRemark.html
+                          }}
+                        />
+                        <a
+                          className="btn btn-lg btn-theme-primary"
+                          href={`/news/${node.slug}`}
+                        >
+                          Read More...
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              {/* / .row */}
+            </div>
+            {/* / .container */}
+            {/* / .wrapper */}
           </div>
           {/* / .main-services */}
         </div>
