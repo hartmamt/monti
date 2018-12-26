@@ -113,7 +113,6 @@ export default ({ children }) => (
 
                 <Location>
                   {({ location }) => {
-                    console.log(location);
                     return (
                       <ul className="nav navbar-nav navbar-right">
                         <li

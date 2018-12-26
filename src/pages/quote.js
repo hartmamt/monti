@@ -3,7 +3,7 @@ import JotformEmbed from "react-jotform-embed-fork";
 import { graphql, StaticQuery } from "gatsby";
 //import { Slide } from "react-slideshow-image";
 //import ImageGallery from "react-image-gallery";
-import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
+import { documentToHtmlString } from "@hartmamt/rich-text-html-renderer";
 import Layout from "../components/layout";
 
 export default () => (

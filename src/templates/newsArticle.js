@@ -2,7 +2,7 @@ import React from "react";
 import { graphql } from "gatsby";
 import { Slide } from "react-slideshow-image";
 import ImageGallery from "react-image-gallery";
-import { documentToHtmlString } from "@contentful/rich-text-html-renderer";
+import { documentToHtmlString } from "@hartmamt/rich-text-html-renderer";
 import Layout from "../components/layout";
 
 export default ({ data }) => {

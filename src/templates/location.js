@@ -6,7 +6,6 @@ import { graphql } from "gatsby";
 import Layout from "../components/layout";
 
 export default ({ data }) => {
-  //console.log(data.contentfulService.imageGallery);
   const name = data.contentfulLocation.name;
 
   return (
