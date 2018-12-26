@@ -44,8 +44,8 @@ export default class HTML extends React.Component {
             content="//www.monti-inc.com/webhook-uploads/1443261900685/copper-7.jpg"
           />
           <meta property="og:type" content="website" />
-          <meta property="og:url" content="http://monti-inc.com/" />
-          <link rel="canonical" href="http://monti-inc.com/" />
+          <meta property="og:url" content="https://monti-inc.com/" />
+          <link rel="canonical" href="https://monti-inc.com/" />
           {this.props.headComponents}
           <link rel="shortcut icon" href="/images/favicon.ico" />
           <script
