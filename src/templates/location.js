@@ -118,6 +118,7 @@ export const query = graphql`
   query($slug: String!) {
     contentfulLocation(slug: { eq: $slug }) {
       name
+      slug
       address1
       city
       state
@@ -145,6 +146,7 @@ export const query = graphql`
       edges {
         node {
           name
+          slug
           image {
             file {
               url
